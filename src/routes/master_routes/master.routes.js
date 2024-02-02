@@ -14,6 +14,10 @@ router.post("/registrasi", UserController.addUser);
 // Reimbursement
 router.get("/reimbursements", ReimbursementController.getAllReimbursement);
 router.get("/reimbursement/:claimId", ReimbursementController.getClaimById);
+router.get(
+  "/reimbursement-user/:userID",
+  ReimbursementController.getClaimByUserId
+);
 router.put("/reimbursement/:claimId", ReimbursementController.updateClaim);
 router.post("/reimbursement", ReimbursementController.addClaim);
 

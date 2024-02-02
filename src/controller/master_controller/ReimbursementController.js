@@ -19,6 +19,15 @@ getClaimById = async (req, res) => {
     return api.error(res, "Internal Server Error");
   }
 };
+getClaimByUserId = async (req, res) => {
+  const userID = req.params.userID;
+  try {
+    let data = await model.getAllByUserId(userID);
+    return api.ok(res, data);
+  } catch {
+    return api.error(res, "Internal Server Error");
+  }
+};
 
 updateClaim = async (req, res) => {
   const claimId = req.params.claimId;
@@ -46,4 +55,5 @@ module.exports = {
   getClaimById,
   updateClaim,
   addClaim,
+  getClaimByUserId,
 };

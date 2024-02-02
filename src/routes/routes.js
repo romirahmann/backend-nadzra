@@ -18,7 +18,7 @@ router.get("/not-found", function (req, res) {
 router.use("/auth/", auth_routes);
 
 // master data routes usage
-router.use("/master/", accessControl, masterRoutes);
+router.use("/master/", masterRoutes);
 
 // Upload
 router.get("/file/:filename", UploadController.getFile);
