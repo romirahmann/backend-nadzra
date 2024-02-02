@@ -1,6 +1,8 @@
 const path = require("path");
 const fs = require("fs");
 
+const modelFile = require("./../../model/file.model");
+
 const uploadFile = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({
@@ -10,11 +12,30 @@ const uploadFile = async (req, res) => {
   }
 
   const newFileName = req.file.filename;
-  return res.status(200).json({
-    error: false,
-    message: "File uploaded successfully",
+  const dataFile = {
     filename: newFileName,
-  });
+  };
+
+  try {
+    await modelFile.addFile(dataFile);
+
+    // Dapatkan file_id dari file terbaru
+    const latestFileId = await modelFile.getLatestFileId();
+    console.log(latestFileId);
+
+    return res.status(200).json({
+      error: false,
+      message: "File uploaded successfully",
+      filename: newFileName,
+      file_id: latestFileId, // Menggunakan file_id yang didapatkan dari getLatestFileId
+    });
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error",
+    });
+  }
 };
 
 const getFile = async (req, res) => {
