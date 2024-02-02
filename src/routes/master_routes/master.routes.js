@@ -1,4 +1,5 @@
 var express = require("express");
+const cors = require("cors");
 var router = express.Router();
 
 // Import
@@ -7,6 +8,7 @@ const ApprovalAdmin = require("../../controller/master_controller/ApprovalAdminC
 const ApprovalPartner = require("../../controller/master_controller/ApprovalPartnerController");
 const ReimbursementController = require("../../controller/master_controller/ReimbursementController");
 
+router.use(cors());
 // USER
 router.get("/users", UserController.getAllUser);
 router.post("/registrasi", UserController.addUser);

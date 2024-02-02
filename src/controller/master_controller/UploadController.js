@@ -21,7 +21,6 @@ const uploadFile = async (req, res) => {
 
     // Dapatkan file_id dari file terbaru
     const latestFileId = await modelFile.getLatestFileId();
-    console.log(latestFileId);
 
     return res.status(200).json({
       error: false,
