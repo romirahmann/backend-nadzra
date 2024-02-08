@@ -19,8 +19,19 @@ addAproval = async (req, res) => {
     return api.error(res, "Internal Server Error");
   }
 };
+updateApproval = async (req, res) => {
+  const id = req.params.id;
+  const newData = req.body;
+  try {
+    let data = await model.update(id, newData);
+    return api.ok(res, data);
+  } catch {
+    return api.error(res, "Internal Server Error");
+  }
+};
 
 module.exports = {
   getAllApprovalPartner,
   addAproval,
+  updateApproval,
 };

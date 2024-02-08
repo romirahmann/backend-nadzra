@@ -50,10 +50,21 @@ addClaim = async (req, res) => {
   }
 };
 
+getClaimByMonthYear = async (req, res) => {
+  const { month, year } = req.params;
+  try {
+    const data = await model.getClaimByMonthYear(month, year);
+    return api.ok(res, data);
+  } catch (error) {
+    return api.error(res, "Internal Server Error");
+  }
+};
+
 module.exports = {
   getAllReimbursement,
   getClaimById,
   updateClaim,
   addClaim,
   getClaimByUserId,
+  getClaimByMonthYear,
 };

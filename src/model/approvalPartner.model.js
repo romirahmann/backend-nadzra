@@ -21,8 +21,11 @@ getAll = async () =>
     .leftJoin("reimbursement as r", "r.claim_id", "a.claim_id");
 
 addApproval = async (data) => await db("approval_partner").insert(data);
+update = async (id, data) =>
+  await db("approval_partner").where("approval_admin_id", id).update(data);
 
 module.exports = {
   getAll,
   addApproval,
+  update,
 };

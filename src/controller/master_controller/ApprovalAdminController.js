@@ -29,9 +29,19 @@ updateApproval = async (req, res) => {
     return api.error(res, "Internal Server Error");
   }
 };
+getByClaimId = async (req, res) => {
+  const claim_id = req.params.claim_id;
+  try {
+    let data = await model.getById(claim_id);
+    return api.ok(res, data);
+  } catch {
+    return api.error(res, "Internal Server Error");
+  }
+};
 
 module.exports = {
   getAllAprovalAdmin,
+  getByClaimId,
   addApproval,
   updateApproval,
 };
