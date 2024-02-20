@@ -28,6 +28,15 @@ getClaimByUserId = async (req, res) => {
     return api.error(res, "Internal Server Error");
   }
 };
+getClaimByCategory = async (req, res) => {
+  const { userID, category_id } = req.params;
+  try {
+    let data = await model.getAllByCategory(userID, category_id);
+    return api.ok(res, data);
+  } catch {
+    return api.error(res, "Internal Server Error");
+  }
+};
 
 updateClaim = async (req, res) => {
   const claimId = req.params.claimId;
@@ -60,6 +69,27 @@ getClaimByMonthYear = async (req, res) => {
   }
 };
 
+getTotalClaim = async (req, res) => {
+  const { id, roleID } = req.params;
+  try {
+    let data;
+    if (roleID === "3") {
+      data = await model.getTotalClaimEmployee(id, roleID);
+    } else if (roleID === "2") {
+      data = await model.getTotalClaimAdmin();
+    } else if (roleID === "1") {
+      data = await model.getTotalClaimPartner();
+    }
+    if (data) {
+      return api.ok(res, data);
+    } else {
+      return api.error(res, "Invalid roleID");
+    }
+  } catch {
+    return api.error(res, "Internal Server Error");
+  }
+};
+
 module.exports = {
   getAllReimbursement,
   getClaimById,
@@ -67,4 +97,6 @@ module.exports = {
   addClaim,
   getClaimByUserId,
   getClaimByMonthYear,
+  getTotalClaim,
+  getClaimByCategory,
 };

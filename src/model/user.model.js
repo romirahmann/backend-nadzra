@@ -12,7 +12,8 @@ getAll = async () =>
       "ur.role_desc"
     )
     .from("user as u")
-    .join("user_role as ur", "ur.role_id", "u.role_id");
+    .join("user_role as ur", "ur.role_id", "u.role_id")
+    .where("u.isDeleted", 0);
 
 getByUserId = async (id) => await db("user").where("user_id", id);
 

@@ -18,7 +18,9 @@ router.get("/user/:id", UserController.getUserByUserId);
 
 // Client
 router.get("/clients", ClientController.getAllClient);
+router.get("/client/:id", ClientController.getClientById);
 router.post("/client", ClientController.addClient);
+router.put("/client/:id", ClientController.updateClient);
 
 // Reimbursement
 router.get("/reimbursements", ReimbursementController.getAllReimbursement);
@@ -27,9 +29,14 @@ router.get(
   "/filter-claim/:month/:year",
   ReimbursementController.getClaimByMonthYear
 );
+router.get("/total-claim/:id/:roleID", ReimbursementController.getTotalClaim);
 router.get(
   "/reimbursement-user/:userID",
   ReimbursementController.getClaimByUserId
+);
+router.get(
+  "/reimbursement-client/:userID/:category_id",
+  ReimbursementController.getClaimByCategory
 );
 router.put("/reimbursement/:claimId", ReimbursementController.updateClaim);
 router.post("/reimbursement", ReimbursementController.addClaim);

@@ -14,7 +14,7 @@ const getLatestFileId = async () => {
     if (queryResult.length > 0) {
       return queryResult[0].file_id;
     } else {
-      return null;
+      return 1;
     }
   } catch (error) {
     console.error("Error in getLatestFileId:", error);

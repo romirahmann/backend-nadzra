@@ -16,12 +16,16 @@ getAll = async () =>
       "u.karyawan_id",
       "u.role_id",
       "f.file_id",
-      "f.filename"
+      "f.filename",
+      "ct.category_name",
+      "cl.client_name"
     )
     .from("approve_admin as ap")
     .join("reimbursement as r", "r.claim_id", "ap.claim_id")
     .leftJoin("user as u", "u.user_id", "r.user_id")
-    .leftJoin("file_proof as f", "f.file_id", "r.file_id");
+    .leftJoin("file_proof as f", "f.file_id", "r.file_id")
+    .leftJoin("categories as ct", "r.category_id", "ct.category_id")
+    .leftJoin("client as cl", "r.client_id", "cl.client_id");
 getById = async (claimId) =>
   await db
     .select(
@@ -40,7 +44,9 @@ getById = async (claimId) =>
       "f.file_id",
       "f.filename",
       "ur.role_name",
-      "s.status_desc"
+      "s.status_desc",
+      "ct.category_name",
+      "cl.client_name"
     )
     .from("approve_admin as ap")
     .join("reimbursement as r", "r.claim_id", "ap.claim_id")
@@ -48,6 +54,8 @@ getById = async (claimId) =>
     .leftJoin("file_proof as f", "f.file_id", "r.file_id")
     .leftJoin("user_role as ur", "ur.role_id", "u.role_id")
     .leftJoin("status as s", "s.status_code", "r.status_code")
+    .leftJoin("categories as ct", "r.category_id", "ct.category_id")
+    .leftJoin("client as cl", "r.client_id", "cl.client_id")
     .where("ap.claim_id", claimId);
 
 addApproval = async (data) => await db("approve_admin").insert(data);
