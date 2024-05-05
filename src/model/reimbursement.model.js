@@ -128,14 +128,16 @@ getClaimByMonthYear = async (month, year) => {
     .andWhere("status_code", "AP")
     .orderByRaw("CASE WHEN category_id = 1 THEN 0 ELSE 1 END");
 
-  const totalNominal = await db("reimbursement")
+  const totalNominalQuery = await db("reimbursement")
     .sum("nominal as totalNominal")
     .whereRaw("MONTH(payment_date) = ?", [month])
     .andWhereRaw("YEAR(payment_date) = ?", [year])
     .andWhere("status_code", "AP")
     .orderByRaw("CASE WHEN category_id = 1 THEN 0 ELSE 1 END");
 
-  return { data, totalNominal: totalNominal[0].totalNominal };
+  const totalNominal = totalNominalQuery[0]["totalNominal"] || 0;
+
+  return { data, totalNominal };
 };
 
 getTotalClaimEmployee = async (id) => {
